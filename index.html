@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM-YRL-MEMZ 的官网</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei" !important;
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-color: #0d1117;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            color: #e3e3e3;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: #1a1d24;
+            border-right: 1px solid #303643;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-header {
+            font-size: 14px;
+            padding: 10px 12px;
+            background: #252a35;
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-item {
+            padding: 12px 14px;
+            background: #252a35;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sidebar-item:hover {
+            background-color: #2d3340;
+        }
+
+        .sidebar-note {
+            font-size: 13px;
+            color: #a9b2d3;
+            padding: 10px;
+            background: #252a35;
+            border-radius: 8px;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            background: #252a35;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #14181f;
+            position: relative;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            background: #1a1d24;
+            border-bottom: 1px solid #303643;
+        }
+
+        .url-bar {
+            background: #252a35;
+            border-radius: 8px;
+            padding: 8px 14px;
+            flex: 1;
+            margin: 0 12px;
+            font-size: 14px;
+            color: #c9d1e0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-title {
+            font-size: 30px;
+            margin-bottom: 36px;
+            background: #1f242f;
+            padding: 14px 32px;
+            border-radius: 12px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .grid-item {
+            background: #1f242f;
+            padding: 20px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 12px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .grid-item:hover {
+            background: #272d3a;
+            transform: translateY(-2px);
+        }
+
+        .coming-soon {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #a9b2d3;
+        }
+
+        .copyright {
+            font-size: 16px;
+            color: #8a93b3;
+        }
+
+        /* 弹窗面板 */
+        .modal-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1f242f;
+            padding: 25px 30px;
+            border-radius: 16px;
+            font-size: 16px;
+            z-index: 999;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            display: none;
+            width: 85%;
+            max-height: 80vh;
+            overflow-y: auto;
+            line-height: 1.6;
+            white-space: pre-line;
+            text-align: left;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #fff;
+            background: none;
+            border: none;
+        }
+
+        /* 跳转提示框 */
+        .tip-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1f242f;
+            padding: 30px 50px;
+            border-radius: 16px;
+            font-size: 20px;
+            z-index: 9999;
+            box-shadow: 0 0 30px #000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">SYSTEM-YRL-MEMZ 的官网</div>
+        <div class="sidebar-item">主页 Home</div>
+        <div class="sidebar-item" onclick="showVirusGroup()">自制软件/Software</div>
+        <div class="sidebar-item" onclick="goToCloud()">实用工具/Tools</div>
+        <div class="sidebar-item" onclick="showAbout()">关于... About</div>
+        <div class="sidebar-item" onclick="goToCloud()">收集软件Software</div>
+        <div class="sidebar-item" onclick="goToBilibili()">B站主页<br>SYSTEM-YRL-MEMZ</div>
+        <div class="sidebar-note">注：视频仅在B站发布</div>
+        <div class="sidebar-footer">
+            <div style="margin-top:8px; font-size:20px;">Ver 0.5</div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="main-header">
+            <div></div>
+            <div class="url-bar"></div>
+        </div>
+
+        <div class="main-content">
+            <div class="main-title">SYSTEM-YRL-MEMZ 的官网</div>
+            <div class="content-grid">
+                <div class="grid-item" onclick="showToolGroup()">SYSTEM-YRL-MEMZ(SYZ)的工具箱-V1-V3</div>
+                <div class="grid-item" onclick="showVirusGroup()">自制病毒 Virus</div>
+                <div class="grid-item" onclick="goToCloud()">实用工具&软件收集</div>
+                <div class="grid-item" onclick="showQQGroup()">QQ群</div>
+                <div class="grid-item" onclick="showOfficeTutorial()">Office免费安装教程</div>
+                <div class="grid-item" onclick="goToE()">易语言基本教程（不是我做的）</div>
+            </div>
+
+            <div id="modalCard" class="modal-card">
+                <button class="close-btn" onclick="closeModal()">✕</button>
+                <div id="modalContent"></div>
+            </div>
+
+            <div id="tipBox" class="tip-box">密码:2233</div>
+
+            <div class="coming-soon">敬请期待...</div>
+            <div class="copyright">© SYSTEM-YRL-MEMZ 版权所有,2026</div>
+        </div>
+    </div>
+
+    <script>
+        function showVirusGroup() {
+            document.getElementById("modalContent").innerText = "在QQ群718780927";
+            document.getElementById("modalCard").style.display = "block";
+        }
+
+        function showToolGroup() {
+            document.getElementById("modalContent").innerText = "在QQ群718780927 / 1092519535";
+            document.getElementById("modalCard").style.display = "block";
+        }
+
+        function showQQGroup() {
+            document.getElementById("modalContent").innerText = "交流群: 718780927\n软件群: 1092519535";
+            document.getElementById("modalCard").style.display = "block";
+        }
+
+        function showAbout() {
+            document.getElementById("modalContent").innerText = "@SYSTEM-YRL-MEMZ\n只是一个五年级的小学生";
+            document.getElementById("modalCard").style.display = "block";
+        }
+
+        function showOfficeTutorial() {
+            document.getElementById("modalContent").innerText = `Office教程:
+首先，打开浏览器:
+打开这个网页:https://otp.landian.vip/zh-cn/
+点击立即下载，64位选64位，32位选32位的
+建议用:“山东大学镜像站”这条线路下载
+下载完成后解压缩，运行里面的“Office Tool.exe”
+打开后选择左侧边栏的“部署”
+部署界面中，添加你想要的Office产品
+底下选语言拉到最底下选择简体中文
+拉到上面选择下载后再部署
+然后开始部署
+部署时间取决于你的网速和硬件
+安装好后，先别急着打开，打开这个网站:https://blog.yerong.org/archives/14
+往下拉，找到这一串:如果你安装了 Microsoft 365，或者你只是单纯地在遵循教程的指示，请使用以下代码进行激活：
+ospp /unlics /unkeys /inslicid MondoVolume /sethst kms.loli.best /setprt 1688 /act
+上述代码可一次性激活 Office, Visio, Project，同时适用 Win 7/8，能使用 Office 的所有功能。
+如果你需要激活以下产品，请按照自己的需求选择：
+Office, Visio, Project 2024
+Office, Visio, Project 2021
+Office, Visio, Project 2019
+Office, Visio, Project 2016
+选择你安装的产品，复制代码，在应用内按Ctrl+Shift+P，粘贴你复制的命令，点确定，激活完成即可`;
+            document.getElementById("modalCard").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("modalCard").style.display = "none";
+        }
+
+        function goToCloud() {
+            document.getElementById("tipBox").style.display = "block";
+            navigator.clipboard.writeText("2233");
+            setTimeout(() => {
+                window.open("https://system-yrl-memz.lanzouu.com/b00zylgbxc", "_blank");
+                document.getElementById("tipBox").style.display = "none";
+            }, 3000);
+        }
+
+        function goToE() {
+            window.open("https://blog.csdn.net/weixin_51151534/article/details/132487179", "_blank");
+        }
+
+        function goToBilibili() {
+            window.open("https://space.bilibili.com/3546663157238494", "_blank");
+        }
+    </script>
+</body>
+</html>
